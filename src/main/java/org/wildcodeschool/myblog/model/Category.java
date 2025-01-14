@@ -1,7 +1,6 @@
 package org.wildcodeschool.myblog.model;
 
 import jakarta.persistence.*;
-import org.springframework.context.annotation.EnableMBeanExport;
 
 
 @Entity
