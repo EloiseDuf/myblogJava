@@ -1,17 +1,20 @@
 package org.wildcodeschool.myblog.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.wildcodeschool.myblog.model.Article;
 import org.wildcodeschool.myblog.repository.ArticleRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 @RequestMapping("/articles")
+@Controller
 public class ArticleController {
 
     private final ArticleRepository articleRepository;
@@ -38,6 +41,43 @@ public class ArticleController {
         }
 
         return ResponseEntity.ok(article);
+    }
+
+    @GetMapping ("/search-title")
+    public ResponseEntity<List<Article>> getArticlesByTitle(@RequestParam String searchTerms) {
+        List<Article> articles=articleRepository.findByTitle(searchTerms);
+        if (articles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(articles);
+    }
+
+    @GetMapping("/search-content")
+    public ResponseEntity<List<Article>> getArticlesByContent(@RequestParam String keyword) {
+        List<Article> articles=articleRepository.findByContentContaining(keyword);
+        if(articles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(articles);
+    }
+
+    @GetMapping("/search-top5")
+    public ResponseEntity<List<Article>> getFiveLastArticles() {
+        List<Article> articles=articleRepository.findTop5ByOrderByCreatedAtDesc();
+        if(articles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(articles);
+    }
+
+    @GetMapping("/search-createAfter")
+    public  ResponseEntity<List<Article>> getArticlesByCreateAfter(@RequestParam String createAfter) {
+        LocalDate createdAt = LocalDate.parse(createAfter);
+        List<Article> articles=articleRepository.findByCreatedAtGreaterThanOrderByCreatedAtDesc(createdAt.atStartOfDay());
+        if(articles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(articles);
     }
 
     @PostMapping
