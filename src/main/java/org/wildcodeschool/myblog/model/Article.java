@@ -36,6 +36,9 @@ public class Article {
 
     private List<Image> images;
 
+
+// Getters et setters
+
     public List<Image> getImages() {
         return images;
     }
@@ -43,7 +46,7 @@ public class Article {
     public void setImages(List<Image> images) {
         this.images = images;
     }
-// Getters et setters
+
 
     public Long getId() {
         return id;
