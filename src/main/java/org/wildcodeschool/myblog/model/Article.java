@@ -33,9 +33,10 @@ public class Article {
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "image_id")
     )
-
     private List<Image> images;
 
+    @OneToMany(mappedBy ="article")
+    private List<ArticleAuthor> articleAuthors;
 
 // Getters et setters
 
@@ -94,5 +95,13 @@ public class Article {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<ArticleAuthor> getArticleAuthors() {
+        return articleAuthors;
+    }
+
+    public void setArticleAuthors(List<ArticleAuthor> articleAuthors) {
+        this.articleAuthors = articleAuthors;
     }
 }
