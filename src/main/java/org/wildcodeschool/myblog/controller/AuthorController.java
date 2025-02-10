@@ -1,5 +1,7 @@
 package org.wildcodeschool.myblog.controller;
 
+import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,25 +27,41 @@ public class AuthorController {
         authorDTO.setId(author.getId());
         authorDTO.setFirstname(author.getFirstname());
         authorDTO.setLastname(author.getLastname());
+        if (author.getArticleAuthors() != null) {
+            authorDTO.setArticleIds(author.getArticleAuthors().stream()
+                    .filter(articleAuthor -> articleAuthor.getArticle() != null)
+                    .map( articleAuthor -> {
+                        return articleAuthor.getArticle().getId();
+                    })
+                    .toList());
+        }
         return authorDTO;
     }
 
+    @Transactional
     @GetMapping
     public ResponseEntity<List<AuthorDTO>> getAllAuthors() {
         List<Author> authors = authorRepository.findAll();
         if (authors.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
+
+        authors.forEach(author -> Hibernate.initialize(author.getArticleAuthors()));
+
         List<AuthorDTO> authorDTOs = authors.stream().map(this::convertToDTO).collect(Collectors.toList());
         return ResponseEntity.ok(authorDTOs);
     }
 
+    @Transactional
     @GetMapping("/{id}")
     public ResponseEntity<AuthorDTO> getAuthorById(@PathVariable Long id) {
         Author author = authorRepository.findById(id).orElse(null);
         if (author == null) {
             return ResponseEntity.notFound().build();
         }
+
+        Hibernate.initialize(author.getArticleAuthors());
+
         return ResponseEntity.ok(convertToDTO(author));
     }
 

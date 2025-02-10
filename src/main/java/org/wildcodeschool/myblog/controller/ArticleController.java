@@ -1,4 +1,5 @@
 package org.wildcodeschool.myblog.controller;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,6 +67,7 @@ public class ArticleController {
 
     }
 
+    @Transactional
     @GetMapping
     public ResponseEntity<List<ArticleDTO>> getAllArticles() {
         List<Article> articles = articleRepository.findAll();
@@ -76,6 +78,7 @@ public class ArticleController {
         return ResponseEntity.ok(articlesDTOs);
     }
 
+    @Transactional
     @GetMapping("/{id}")
     public ResponseEntity<ArticleDTO> getArticleById(@PathVariable Long id) {
 
