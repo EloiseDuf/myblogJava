@@ -20,7 +20,7 @@ public class AuthorDTO {
         return lastname;
     }
 
-    public void setLastname(String name) {
+    public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
