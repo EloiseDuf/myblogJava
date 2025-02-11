@@ -166,7 +166,7 @@ public class ArticleService {
         if(articleDetails.getArticleAuthors()!=null){
             // Supprimer manuellement les anciens ArticleAuthor
             for(ArticleAuthor oldArticleAuthor :article.getArticleAuthors()){
-                articleAuthorRepository.deleteall(oldArticleAuthor);
+                articleAuthorRepository.delete(oldArticleAuthor);
             }
 
             List<ArticleAuthor> updatedArticleAuthors =new ArrayList<>();
@@ -189,7 +189,7 @@ public class ArticleService {
             }
 
             for (ArticleAuthor articleAuthor :updatedArticleAuthors){
-                articleAuthorRepository.saveall(articleAuthor);
+                articleAuthorRepository.save(articleAuthor);
             }
 
             article.setArticleAuthors(updatedArticleAuthors);
