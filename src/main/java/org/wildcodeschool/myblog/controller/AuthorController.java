@@ -9,7 +9,7 @@ import org.wildcodeschool.myblog.repository.AuthorRepository;
 import org.wildcodeschool.myblog.service.AuthorService;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/authors")

@@ -3,14 +3,12 @@ package org.wildcodeschool.myblog.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.wildcodeschool.myblog.dto.ImageDTO;
-import org.wildcodeschool.myblog.model.Article;
 import org.wildcodeschool.myblog.model.Image;
 import org.wildcodeschool.myblog.repository.ArticleRepository;
 import org.wildcodeschool.myblog.repository.ImageRepository;
 import org.wildcodeschool.myblog.service.ImageService;
-
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/images")

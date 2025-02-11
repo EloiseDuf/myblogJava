@@ -1,10 +1,9 @@
 package org.wildcodeschool.myblog.service;
 
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 import org.wildcodeschool.myblog.dto.ImageDTO;
 import org.wildcodeschool.myblog.mapper.ImageMapper;
-import org.wildcodeschool.myblog.model.Category;
 import org.wildcodeschool.myblog.model.Image;
 import org.wildcodeschool.myblog.repository.ImageRepository;
 
