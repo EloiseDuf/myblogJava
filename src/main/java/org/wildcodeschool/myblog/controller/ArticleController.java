@@ -1,8 +1,10 @@
 package org.wildcodeschool.myblog.controller;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.wildcodeschool.myblog.dto.ArticleCreateDTO;
 import org.wildcodeschool.myblog.dto.ArticleDTO;
 import org.wildcodeschool.myblog.dto.AuthorDTO;
 import org.wildcodeschool.myblog.model.*;
@@ -87,7 +89,7 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<ArticleDTO> createArticle(@RequestBody Article article) {
+    public ResponseEntity<ArticleDTO> createArticle(@Valid @RequestBody Article article) {
         ArticleDTO savedArticle = articleService.createArticle(article);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);
     }

@@ -3,14 +3,25 @@ package org.wildcodeschool.myblog.mapper;
 import org.springframework.stereotype.Component;
 import org.wildcodeschool.myblog.dto.ArticleDTO;
 import org.wildcodeschool.myblog.dto.AuthorDTO;
+import org.wildcodeschool.myblog.dto.CategoryDTO;
 import org.wildcodeschool.myblog.model.Article;
+import org.wildcodeschool.myblog.model.Category;
 import org.wildcodeschool.myblog.model.Image;
+import org.wildcodeschool.myblog.repository.CategoryRepository;
+import org.wildcodeschool.myblog.service.CategoryService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Component
 public class ArticleMapper {
+    private final CategoryService categoryService;
+
+    public ArticleMapper(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
     public ArticleDTO convertToDTO(Article article) {
         ArticleDTO articleDTO = new ArticleDTO();
         articleDTO.setId(article.getId());
@@ -49,4 +60,5 @@ public class ArticleMapper {
         return articleDTO;
 
     }
+
 }
