@@ -5,8 +5,8 @@ import org.wildcodeschool.myblog.model.Author;
 
 public class ArticleAuthorDTO {
     private Long id;
-    private ArticleDTO article;
-    private AuthorDTO author;
+    private Long articleId;
+    private Long authorId;
     private String contribution;
 
     public Long getId() {
@@ -17,20 +17,20 @@ public class ArticleAuthorDTO {
         this.id = id;
     }
 
-    public ArticleDTO getArticle() {
-        return article;
+    public Long getArticleId() {
+        return articleId;
     }
 
-    public void setArticle(ArticleDTO article) {
-        this.article = article;
+    public void setArticleId(Long articleId) {
+        this.articleId = articleId;
     }
 
-    public AuthorDTO getAuthor() {
-        return author;
+    public Long getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(AuthorDTO author) {
-        this.author = author;
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
     }
 
     public String getContribution() {
