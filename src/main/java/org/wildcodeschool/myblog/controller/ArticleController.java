@@ -58,6 +58,14 @@ public class ArticleController {
                         authorDTO.setId(articleAuthor.getAuthor().getId());
                         authorDTO.setFirstname(articleAuthor.getAuthor().getFirstname());
                         authorDTO.setLastname(articleAuthor.getAuthor().getLastname());
+
+                        if (articleAuthor.getAuthor().getArticleAuthors() != null) {
+                            List<Long> articleIds = articleAuthor.getAuthor().getArticleAuthors().stream()
+                                    .map(a -> a.getArticle().getId())
+                                    .collect(Collectors.toList());
+                            authorDTO.setArticleIds(articleIds);
+                        }
+
                         return authorDTO;
                     })
                     .collect(Collectors.toList()));
