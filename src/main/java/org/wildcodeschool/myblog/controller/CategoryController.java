@@ -5,11 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.wildcodeschool.myblog.dto.CategoryDTO;
 import org.wildcodeschool.myblog.model.Category;
-import org.wildcodeschool.myblog.repository.CategoryRepository;
 import org.wildcodeschool.myblog.service.CategoryService;
-
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 
 @RestController

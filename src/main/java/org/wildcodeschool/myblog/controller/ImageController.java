@@ -4,8 +4,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.wildcodeschool.myblog.dto.ImageDTO;
 import org.wildcodeschool.myblog.model.Image;
-import org.wildcodeschool.myblog.repository.ArticleRepository;
-import org.wildcodeschool.myblog.repository.ImageRepository;
 import org.wildcodeschool.myblog.service.ImageService;
 import java.util.List;
 
@@ -14,13 +12,10 @@ import java.util.List;
 @RequestMapping("/images")
 
 public class ImageController {
-    private final ImageRepository imageRepository;
-    private final ArticleRepository articleRepository;
+
     private final ImageService imageService;
 
-    public ImageController(ImageRepository imageRepository, ArticleRepository articleRepository, ImageService imageService) {
-        this.imageRepository = imageRepository;
-        this.articleRepository = articleRepository;
+    public ImageController(ImageService imageService) {
         this.imageService = imageService;
     }
 

@@ -1,9 +1,7 @@
 package org.wildcodeschool.myblog.service;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
-import org.wildcodeschool.myblog.dto.ArticleCreateDTO;
 import org.wildcodeschool.myblog.dto.ArticleDTO;
 import org.wildcodeschool.myblog.exception.ResourceNotFoundException;
 import org.wildcodeschool.myblog.mapper.ArticleMapper;
@@ -168,7 +166,7 @@ public class ArticleService {
         if(articleDetails.getArticleAuthors()!=null){
             // Supprimer manuellement les anciens ArticleAuthor
             for(ArticleAuthor oldArticleAuthor :article.getArticleAuthors()){
-                articleAuthorRepository.delete(oldArticleAuthor);
+                articleAuthorRepository.deleteall(oldArticleAuthor);
             }
 
             List<ArticleAuthor> updatedArticleAuthors =new ArrayList<>();
@@ -191,7 +189,7 @@ public class ArticleService {
             }
 
             for (ArticleAuthor articleAuthor :updatedArticleAuthors){
-                articleAuthorRepository.save(articleAuthor);
+                articleAuthorRepository.saveall(articleAuthor);
             }
 
             article.setArticleAuthors(updatedArticleAuthors);

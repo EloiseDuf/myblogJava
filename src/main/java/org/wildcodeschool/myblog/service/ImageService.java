@@ -29,7 +29,10 @@ public class ImageService {
 
     public ImageDTO getImageById(Long id){
         Image image=imageRepository.findById(id).orElse(null);
-        return imageMapper.convertToDTO(image);
+        if (image != null) {
+            return imageMapper.convertToDTO(image);
+        }
+        return null;
     }
 
     public ImageDTO createImage(Image image){
@@ -42,6 +45,7 @@ public class ImageService {
         image.setUrl(imageDetails.getUrl());
         Image updatedImage=imageRepository.save(image);
         return imageMapper.convertToDTO(updatedImage);
+
     }
 
     public boolean deleteImage (Long id){
