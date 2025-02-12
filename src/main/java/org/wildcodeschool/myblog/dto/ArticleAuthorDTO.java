@@ -1,7 +1,5 @@
 package org.wildcodeschool.myblog.dto;
 
-import org.wildcodeschool.myblog.model.Article;
-import org.wildcodeschool.myblog.model.Author;
 
 public class ArticleAuthorDTO {
     private Long id;

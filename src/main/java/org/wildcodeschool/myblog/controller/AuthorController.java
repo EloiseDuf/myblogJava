@@ -34,7 +34,7 @@ public class AuthorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AuthorDTO> getAuthorById(@PathVariable Long id) {
-        AuthorDTO author = authorService.getAuthorById(id);
+        AuthorDTO author = authorService.getAuthorByIdDTO(id);
         if (author == null) {
             return ResponseEntity.notFound().build();
         }

@@ -1,7 +1,10 @@
 package org.wildcodeschool.myblog.service;
 
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.wildcodeschool.myblog.dto.ArticleCreateDTO;
 import org.wildcodeschool.myblog.dto.ArticleDTO;
 import org.wildcodeschool.myblog.exception.ResourceNotFoundException;
 import org.wildcodeschool.myblog.mapper.ArticleMapper;
@@ -70,19 +73,21 @@ public class ArticleService {
         return articles.stream().map(articleMapper::convertToDTO).collect(Collectors.toList());
     }
 
-    public ArticleDTO createArticle(Article article) {
+    public ArticleDTO createArticle(ArticleCreateDTO articleCreateDTO) {
+        Article article = articleMapper.convertToEntity(articleCreateDTO);
+        article.setCreatedAt(LocalDateTime.now());
         article.setUpdatedAt(LocalDateTime.now());
-
-        //ajout catégorie existante
 
         if (article.getCategory() != null) {
             Category category = categoryRepository.findById(article.getCategory().getId()).orElse(null);
+
             if (category == null) {
                 return null;
             }
             article.setCategory(category);
         }
-        //ajout  image existante
+
+        System.out.println(article.getCategory().getName());
 
         if(article.getImages()!=null && !article.getImages().isEmpty()){
             List<Image> validImages=new ArrayList<>();
@@ -105,10 +110,10 @@ public class ArticleService {
 
 
         Article savedArticle = articleRepository.save(article);
-
         if(article.getArticleAuthors()!=null){
             for(ArticleAuthor articleAuthor :article.getArticleAuthors()){
                 Author author=articleAuthor.getAuthor();
+                System.out.println(author.getFirstname());
                 author=authorRepository.findById(author.getId()).orElse(null);
                 if(author==null){
                     return null;

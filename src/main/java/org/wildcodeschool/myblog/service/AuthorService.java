@@ -26,13 +26,22 @@ private final AuthorMapper authorMapper;
         return authors.stream().map(authorMapper::convertToDTO).collect(Collectors.toList());
     }
 
-    public AuthorDTO getAuthorById(Long id){
+    public AuthorDTO getAuthorByIdDTO(Long id){
         Author author = authorRepository.findById(id).orElse(null);
         if (author == null) {
             return null;
         }
         return authorMapper.convertToDTO(author);
     }
+
+    public Author getAuthorById(Long id){
+        Author author = authorRepository.findById(id).orElse(null);
+        if (author == null) {
+            return null;
+        }
+        return author;
+    }
+
 
     public AuthorDTO createAuthor (Author author){
         Author savedAuthor = authorRepository.save(author);

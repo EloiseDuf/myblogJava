@@ -1,20 +1,14 @@
 package org.wildcodeschool.myblog.mapper;
 
 import org.springframework.stereotype.Component;
-import org.wildcodeschool.myblog.dto.ArticleDTO;
-import org.wildcodeschool.myblog.dto.AuthorDTO;
-import org.wildcodeschool.myblog.model.Article;
-import org.wildcodeschool.myblog.model.Image;
-import org.wildcodeschool.myblog.service.CategoryService;
-
+import org.wildcodeschool.myblog.dto.*;
+import org.wildcodeschool.myblog.model.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @Component
 public class ArticleMapper {
-
-
     public ArticleDTO convertToDTO(Article article) {
         ArticleDTO articleDTO = new ArticleDTO();
         articleDTO.setId(article.getId());
@@ -53,5 +47,46 @@ public class ArticleMapper {
         return articleDTO;
 
     }
+
+    public Article convertToEntity(ArticleCreateDTO articleCreateDTO) {
+        Article article = new Article();
+        article.setTitle(articleCreateDTO.getTitle());
+        article.setContent(articleCreateDTO.getContent());
+
+        if(articleCreateDTO.getCategoryId()!=null){
+            Category category = new Category();
+            category.setId(articleCreateDTO.getCategoryId());
+            article.setCategory(category);
+        }
+
+        if(articleCreateDTO.getImages()!=null){
+            article.setImages(articleCreateDTO.getImages()
+                    .stream()
+                    .map(img->{
+                        Image image=new Image();
+                        image.setUrl(img.getUrl());
+                        return image;
+                    })
+                    .collect(Collectors.toList()));
+        }
+
+        if(articleCreateDTO.getAuthors()!=null){
+            article.setArticleAuthors(articleCreateDTO.getAuthors()
+                    .stream()
+                    .map(authorCont->{
+                        ArticleAuthor articleAuthor=new ArticleAuthor();
+                        Author author=new Author();
+                        author.setId(authorCont.getAuthorId());
+                        articleAuthor.setAuthor(author);
+                        articleAuthor.setContribution(authorCont.getContribution());
+                        return articleAuthor;
+                    })
+                    .collect(Collectors.toList()));
+        }
+        return article;
+    }
+
+
+
 
 }

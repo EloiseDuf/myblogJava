@@ -31,7 +31,7 @@ public class ImageController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ImageDTO> getImageById(@PathVariable long id){
-        ImageDTO image=imageService.getImageById(id);
+        ImageDTO image=imageService.getImageByIdDTO(id);
         if(image == null){
             return ResponseEntity.notFound().build();
         }

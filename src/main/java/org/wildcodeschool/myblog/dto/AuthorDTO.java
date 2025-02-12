@@ -8,6 +8,7 @@ public class AuthorDTO {
     private String firstname;
     private List<Long> articleIds;
 
+
     public Long getId() {
         return id;
     }

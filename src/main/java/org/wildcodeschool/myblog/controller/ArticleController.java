@@ -89,9 +89,9 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<ArticleDTO> createArticle(@Valid @RequestBody Article article) {
-        ArticleDTO savedArticle = articleService.createArticle(article);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);
+    public ResponseEntity<ArticleDTO> createArticle(@Valid @RequestBody ArticleCreateDTO articleCreateDTO) {
+        ArticleDTO savedArticleDTO = articleService.createArticle(articleCreateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedArticleDTO);
     }
 
     @PutMapping("/{id}")

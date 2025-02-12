@@ -38,12 +38,12 @@ public class Article {
     @OneToMany(mappedBy ="article")
     private List<ArticleAuthor> articleAuthors;
 
-    @PrePersist
-    public void prePersist() {
-        if (createdAt == null) {
-            createdAt = LocalDateTime.now();  // Assigner la date de création au moment de l'insertion
-        }
-    }
+//    @PrePersist
+//    public void prePersist() {
+//        if (createdAt == null) {
+//            createdAt = LocalDateTime.now();  // Assigner la date de création au moment de l'insertion
+//        }
+//    }
 
 // Getters et setters
 

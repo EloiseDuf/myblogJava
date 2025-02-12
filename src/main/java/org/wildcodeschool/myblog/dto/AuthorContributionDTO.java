@@ -11,4 +11,20 @@ public class AuthorContributionDTO {
 
     @NotBlank(message = "La contribution de l'auteur ne doit pas être vide")
     private String contribution;
+
+    public Long getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getContribution() {
+        return contribution;
+    }
+
+    public void setContribution(String contribution) {
+        this.contribution = contribution;
+    }
 }

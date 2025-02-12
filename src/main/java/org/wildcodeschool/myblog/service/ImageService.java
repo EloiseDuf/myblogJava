@@ -27,12 +27,25 @@ public class ImageService {
         return images.stream().map(imageMapper::convertToDTO).collect(Collectors.toList());
     }
 
-    public ImageDTO getImageById(Long id){
+    public ImageDTO getImageByIdDTO(Long id){
         Image image=imageRepository.findById(id).orElse(null);
         if (image != null) {
             return imageMapper.convertToDTO(image);
         }
         return null;
+    }
+
+    public Image getImageById(Long id){
+        return imageRepository.findById(id).orElse(null);
+    }
+
+    public Image getImageByUrl(String url){
+        Image image=imageRepository.findByUrl(url);
+        if (image != null) {
+            return image;
+        } else {
+            return null;
+        }
     }
 
     public ImageDTO createImage(Image image){
