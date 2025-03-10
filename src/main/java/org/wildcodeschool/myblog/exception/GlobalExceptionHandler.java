@@ -22,6 +22,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur est survenue");
     }
 
+    @ExceptionHandler(AlreadyUseException.class)
+    public ResponseEntity<String> handleAlreadyUseException(AlreadyUseException exception){
+        return new ResponseEntity<>(exception.getMessage(),HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(InternalServerException.class)
     public ResponseEntity<String> handleInternalServerException(InternalServerException exception) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
