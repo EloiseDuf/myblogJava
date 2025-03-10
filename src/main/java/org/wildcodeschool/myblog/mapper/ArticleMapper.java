@@ -52,41 +52,7 @@ public class ArticleMapper {
         Article article = new Article();
         article.setTitle(articleCreateDTO.getTitle());
         article.setContent(articleCreateDTO.getContent());
-
-        if(articleCreateDTO.getCategoryId()!=null){
-            Category category = new Category();
-            category.setId(articleCreateDTO.getCategoryId());
-            article.setCategory(category);
-        }
-
-        if(articleCreateDTO.getImages()!=null){
-            article.setImages(articleCreateDTO.getImages()
-                    .stream()
-                    .map(img->{
-                        Image image=new Image();
-                        image.setUrl(img.getUrl());
-                        return image;
-                    })
-                    .collect(Collectors.toList()));
-        }
-
-        if(articleCreateDTO.getAuthors()!=null){
-            article.setArticleAuthors(articleCreateDTO.getAuthors()
-                    .stream()
-                    .map(authorCont->{
-                        ArticleAuthor articleAuthor=new ArticleAuthor();
-                        Author author=new Author();
-                        author.setId(authorCont.getAuthorId());
-                        articleAuthor.setAuthor(author);
-                        articleAuthor.setContribution(authorCont.getContribution());
-                        return articleAuthor;
-                    })
-                    .collect(Collectors.toList()));
-        }
         return article;
     }
-
-
-
 
 }
