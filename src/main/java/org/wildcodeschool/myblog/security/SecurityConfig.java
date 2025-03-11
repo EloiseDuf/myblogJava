@@ -32,7 +32,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/auth/register").permitAll()
                         .requestMatchers(HttpMethod.GET,"/articles/**").permitAll()
 //                        .requestMatchers(HttpMethod.GET,"/admin").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/articles/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/articles/**").permitAll()
                         .requestMatchers(HttpMethod.PUT,"/articles/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/articles/**").hasRole("ADMIN")
                         .anyRequest().authenticated() // Tous les autres endpoints nécessitent une authentification

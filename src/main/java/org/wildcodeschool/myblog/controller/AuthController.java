@@ -1,5 +1,6 @@
 package org.wildcodeschool.myblog.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody UserRegistrationDTO userRegistrationDTO){
+    public ResponseEntity<User> register(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO){
         User registeredUser = userService.registerUser(
                 userRegistrationDTO.getEmail(),
                 userRegistrationDTO.getPassword(),
