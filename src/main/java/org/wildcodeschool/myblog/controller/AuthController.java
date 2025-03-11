@@ -31,7 +31,7 @@ public class AuthController {
         User registeredUser = userService.registerUser(
                 userRegistrationDTO.getEmail(),
                 userRegistrationDTO.getPassword(),
-                Set.of("USER"));
+                Set.of("ROLE_USER"));
         return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
     }
 
