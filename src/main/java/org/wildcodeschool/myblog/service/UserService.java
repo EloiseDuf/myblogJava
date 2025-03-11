@@ -1,11 +1,7 @@
 package org.wildcodeschool.myblog.service;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.wildcodeschool.myblog.dto.AuthorDTO;
 import org.wildcodeschool.myblog.exception.AlreadyUseException;
-import org.wildcodeschool.myblog.exception.ResourceNotFoundException;
-import org.wildcodeschool.myblog.model.Author;
 import org.wildcodeschool.myblog.model.User;
 import org.wildcodeschool.myblog.repository.UserRepository;
 
