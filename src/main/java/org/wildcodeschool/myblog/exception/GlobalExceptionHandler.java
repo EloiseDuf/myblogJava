@@ -2,6 +2,8 @@ package org.wildcodeschool.myblog.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,6 +22,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserNameNotFoundException.class)
     public ResponseEntity<String> handleUserNotFound(UserNameNotFoundException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler( AccessDeniedException.class)
+    public ResponseEntity<String> handleAccessDeniedException(Exception ex) {
+        return new ResponseEntity<>("Vous n'avez pas les droits nécessaires pour cette action", HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(AuthenticationFailedException.class)
