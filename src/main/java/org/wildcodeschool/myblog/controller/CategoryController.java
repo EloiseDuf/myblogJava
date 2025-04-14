@@ -3,6 +3,7 @@ package org.wildcodeschool.myblog.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.wildcodeschool.myblog.dto.CategoryDTO;
 import org.wildcodeschool.myblog.model.Category;
 import org.wildcodeschool.myblog.service.CategoryService;
@@ -32,14 +33,15 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Long id) {
-
         CategoryDTO  category = categoryService.getCategoryById(id);
+
         if (category == null) {
             return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok(category);
     }
+
 
     @PostMapping
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody Category category) {

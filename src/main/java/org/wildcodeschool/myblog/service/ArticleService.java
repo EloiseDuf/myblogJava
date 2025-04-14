@@ -1,13 +1,11 @@
 package org.wildcodeschool.myblog.service;
 
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.wildcodeschool.myblog.dto.*;
-import org.wildcodeschool.myblog.exception.GlobalExceptionHandler;
 import org.wildcodeschool.myblog.exception.InternalServerException;
-import org.wildcodeschool.myblog.exception.ResourceNotFoundException;
 import org.wildcodeschool.myblog.mapper.ArticleMapper;
 import org.wildcodeschool.myblog.mapper.ImageMapper;
 import org.wildcodeschool.myblog.model.*;
@@ -17,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,13 +46,29 @@ public class ArticleService {
         this.articleAuthorRepository = articleAuthorRepository;
     }
 
+    public boolean isOwner(Long articleId, Long userId) {
+        return articleRepository.findById(articleId)
+                .map(article -> {
+                    boolean isOwner = article.getArticleAuthors()
+                            .stream()
+                            .anyMatch(aa -> aa.getAuthor().getId().equals(userId));
+
+                    if (!isOwner) {
+                        throw new AccessDeniedException("Vous n'êtes pas propriétaire de cet article.");
+                    }
+
+                    return true;
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Article non trouvé"));
+    }
+
     public List<ArticleDTO> getAllArticles() {
         List<Article> articles = articleRepository.findAll();
         return articles.stream().map(articleMapper::convertToDTO).collect(Collectors.toList());
     }
 
     public ArticleDTO getArticleById(Long id) {
-        Article article = articleRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("L'article avec l'id " + id + " n'a pas été trouvé"));
+        Article article = articleRepository.findById(id).orElseThrow(()->new NoSuchElementException("L'article avec l'id " + id + " n'a pas été trouvé"));
         return articleMapper.convertToDTO(article);
     }
 
@@ -85,7 +100,7 @@ public class ArticleService {
 
         if (articleCreateDTO.getCategoryId() != null) {
             Category category = categoryRepository.findById(articleCreateDTO.getCategoryId())
-                    .orElseThrow(()->new ResourceNotFoundException("La catégorie avec l'id "+articleCreateDTO.getCategoryId()+ " n'a pas été trouvé"));
+                    .orElseThrow(()->new NoSuchElementException("La catégorie avec l'id "+articleCreateDTO.getCategoryId()+ " n'a pas été trouvé"));
             article.setCategory(category);
         }
 
@@ -94,7 +109,7 @@ public class ArticleService {
             for(ImageDTO image:articleCreateDTO.getImages()){
                 if(image.getId()!=null){
                     Image existingImages=imageRepository.findById(image.getId())
-                            .orElseThrow(()->new ResourceNotFoundException("L'image avec l'id "+image.getId()+ " n'a pas été trouvé"));
+                            .orElseThrow(()->new NoSuchElementException("L'image avec l'id "+image.getId()+ " n'a pas été trouvé"));
                     if(existingImages!=null){
                         validImages.add(existingImages);
                     } else {
@@ -115,7 +130,7 @@ public class ArticleService {
             for(AuthorContributionDTO authorContributionDTO :articleCreateDTO.getAuthors()){
                 Long authorId =authorContributionDTO.getAuthorId();
                 Author author=authorRepository.findById(authorId)
-                        .orElseThrow(()->new ResourceNotFoundException("L'auteur avec l'id "+ authorId + " n'a pas été trouvé"));
+                        .orElseThrow(()->new NoSuchElementException("L'auteur avec l'id "+ authorId + " n'a pas été trouvé"));
                 ArticleAuthor articleAuthor=new ArticleAuthor();
                 articleAuthor.setAuthor(author);
                 articleAuthor.setArticle(savedArticle);

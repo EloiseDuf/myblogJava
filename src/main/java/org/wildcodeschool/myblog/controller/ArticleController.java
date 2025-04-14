@@ -3,6 +3,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.wildcodeschool.myblog.dto.ArticleCreateDTO;
 import org.wildcodeschool.myblog.dto.ArticleDTO;
@@ -94,7 +95,9 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedArticleDTO);
     }
 
+
     @PutMapping("/{id}")
+//    @PreAuthorize("@articleService.isOwner(#id,authentication.principal.id)")
     public ResponseEntity<ArticleDTO> updateArticle(@PathVariable Long id, @RequestBody Article articleDetails) {
 
         ArticleDTO updatedarticle = articleService.updateArticle(id,articleDetails);

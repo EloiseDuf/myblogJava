@@ -19,7 +19,7 @@ public class MyblogApplication {
 		System.setProperty("DATABASE_URL", dotenv.get("DATABASE_URL"));
 		System.setProperty("DATABASE_USER", dotenv.get("DATABASE_USER"));
 		System.setProperty("DATABASE_PASSWORD", dotenv.get("DATABASE_PASSWORD"));
-
+		System.setProperty("CORS_ALLOWED_ORIGIN", dotenv.get("CORS_ALLOWED_ORIGIN"));
 
 		SpringApplication.run(MyblogApplication.class, args);
 	}

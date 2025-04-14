@@ -1,11 +1,14 @@
 package org.wildcodeschool.myblog.service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.wildcodeschool.myblog.dto.CategoryDTO;
 import org.wildcodeschool.myblog.mapper.CategoryMapper;
 import org.wildcodeschool.myblog.model.Category;
 import org.wildcodeschool.myblog.repository.CategoryRepository;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,11 +31,10 @@ public class CategoryService {
         return categories.stream().map(categoryMapper::convertToDTO).collect(Collectors.toList());
     }
 
-    public CategoryDTO getCategoryById(Long id){
-        Category category = categoryRepository.findById(id).orElse(null);
-        if(category==null){
-            return null;
-        }
+    public CategoryDTO getCategoryById(Long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Category with id " + id + " not found"));
+
         return categoryMapper.convertToDTO(category);
     }
 
